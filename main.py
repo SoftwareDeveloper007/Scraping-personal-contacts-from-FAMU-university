@@ -18,10 +18,11 @@ def scraping(first_name="", last_name=""):
     url = url + "?srch={}+{}&submit=Search".format(first_name, last_name)
 
     r = requests.post(url)
-    
     html = r.content.decode()
+    soup = BeautifulSoup(html, "html.parser")
+    table = soup.select_one("table > tbody")
 
-    print(html)
+    print(table.text)
 
 
 scraping(first_name="RANDALL", last_name="ABATE")
