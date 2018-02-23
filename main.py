@@ -20,9 +20,36 @@ def scraping(first_name="", last_name=""):
     r = requests.post(url)
     html = r.content.decode()
     soup = BeautifulSoup(html, "html.parser")
-    table = soup.select_one("table > tbody")
+    table = soup.select_one("div#employee_div > table")
 
-    print(table.text)
+    if table:
+        table_txt = table.text.strip().split("\n")
+        try:
+            position = table_txt[1].split(":")[1].strip()
+        except:
+            position = ""
+        try:
+            dept = table_txt[2].split(":")[1].strip()
+        except:
+            dept = ""
+        try:
+            building = table_txt[3].split(":")[1].strip()
+        except:
+            building = ""
+        try:
+            phone_num = table_txt[5].strip()
+        except:
+            phone_num
+    else:
+        position = ""
+        dept = ""
+        building = ""
+        phone_num = ""
 
+    print(position)
+    print(dept)
+    print(building)
+    print(phone_num)
+    return [position, dept, building, phone_num]
 
-scraping(first_name="RANDALL", last_name="ABATE")
+scraping(first_name="AHMAD", last_name="SAIYED")
